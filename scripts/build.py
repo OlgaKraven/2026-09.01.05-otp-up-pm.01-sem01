@@ -22,7 +22,7 @@ def main() -> None:
     files = [p for p in SITE.rglob("*") if p.is_file() and p.name != "manifest.json"]
     manifest = {"title": "УП ПМ.01 · 09.01.05", "files": [digest(p) for p in sorted(files)]}
     (SITE / "manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     print(f"BUILT: manifest for {len(files)} published files")
 

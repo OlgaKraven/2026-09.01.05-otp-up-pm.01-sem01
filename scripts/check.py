@@ -26,7 +26,7 @@ class Links(HTMLParser):
 
 
 def check_local_links() -> None:
-    for page in SITE.glob("*.html"):
+    for page in SITE.rglob("*.html"):
         parser = Links()
         parser.feed(page.read_text(encoding="utf-8"))
         for link in parser.links:
@@ -58,6 +58,19 @@ def main() -> None:
         assert len(area["knowledge_card_topics"]) == 2
         assert len(area["additional_tasks"]) == 2
         assert (DL / f"variant-{area['variant']}.json").is_file()
+        variant = area['variant']
+        initial = json.loads((DL / f'variant-{variant}.json').read_text(encoding='utf-8'))
+        assert [(t['id'], t['topic'], t['description']) for t in initial['tickets']] == [(t['id'], t['topic'], t['description']) for t in area['tickets']]
+        assert initial['additional_tasks'] == area['additional_tasks']
+        assert initial['knowledge_card_topics'] == area['knowledge_card_topics']
+        assert len(initial['additional_inputs']) == 2 and all(t['dossier'] for t in initial['tickets'])
+        assert initial['controls']['code'] == f'{int(variant):03d}205'
+        assert (DL / f'variant-{variant}.pdf').read_bytes().startswith(b'%PDF-')
+        with zipfile.ZipFile(DL / f'stand-{variant}.zip') as package:
+            zipped = json.loads(package.read('initial.json').decode('utf-8'))
+            assert zipped == initial
+            assert all(path in package.namelist() for path in initial['materials'].values())
+            assert package.read(f'materials/{variant}/sample.csv').decode('utf-8').splitlines()[1].startswith(initial['controls']['code']+';')
 
     required = {
         "assignment.pdf", "guide.pdf", "report-template.md", "report-template.docx",
