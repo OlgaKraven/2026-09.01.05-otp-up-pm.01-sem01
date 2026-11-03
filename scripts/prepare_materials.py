@@ -2,6 +2,7 @@
 from __future__ import annotations
 import copy, html, json, shutil
 from pathlib import Path
+from individual_materials import create_individual_materials
 ROOT=Path(__file__).resolve().parents[1]; SITE=ROOT/'site'; DL=SITE/'downloads'
 def write(p,s):
     p.parent.mkdir(parents=True,exist_ok=True);p.write_text(s,encoding='utf-8',newline='\n')
@@ -9,6 +10,8 @@ def dump(p,d):write(p,json.dumps(d,ensure_ascii=False,indent=2)+'\n')
 def h(s):return html.escape(str(s))
 course=json.loads((ROOT/'content/course.json').read_text(encoding='utf-8'))
 profiles=json.loads((ROOT/'content/case-inputs.json').read_text(encoding='utf-8'))
+individual=json.loads((ROOT/'content/individual-inputs.json').read_text(encoding='utf-8'))
+methods=json.loads((ROOT/'content/individual-methods.json').read_text(encoding='utf-8'))
 STYLE='''@font-face{font-family:Golos;src:url("fonts/GolosText.ttf")}*{box-sizing:border-box}body{margin:0;font:16px/1.65 Golos,Arial,sans-serif;color:#1c1c1c}header{background:#1c1c1c;color:white;border-bottom:6px solid #ed131c;padding:30px}h1{font-size:36px;line-height:1.2}h2{font-size:23px}main{max-width:1080px;margin:auto;padding:30px}.block{background:#f4f4f6;border-radius:14px;padding:24px;margin:20px 0}.route{border-left:2px solid #ddd;padding-left:25px}.check{border-top:1px solid #dfe1e5;padding-top:12px}a{color:#a40d14}header a{color:white}nav,.links{display:flex;gap:24px;flex-wrap:wrap}.button{padding:12px 18px;border:1px solid #aaa;border-radius:6px;display:inline-block;text-decoration:none}td,th{border:1px solid #ddd;padding:12px;text-align:left}table{border-collapse:collapse}img{max-width:100%}pre,code{white-space:pre-wrap;overflow-wrap:anywhere}@media print{nav,.screen{display:none}@page{size:A4;margin:20mm 20mm 20mm 30mm}body{font-size:12pt}.block{break-inside:avoid}header{background:white;color:black;padding:0}h1{font-size:24pt}main{padding:0}}'''
 STYLE=(ROOT/'content/materials.css').read_text(encoding='utf-8')
 write(SITE/'assets/materials.css',STYLE)
@@ -58,16 +61,17 @@ for source in [demo]+course['areas']:
     if v!='DEMO':
         for t in d['tickets']:t['dossier']=t['dossier'].replace('001205',code).replace('001206',d['controls']['next_code'])
         d['additional_inputs']=[s.replace('001205',code).replace('001206',d['controls']['next_code']) for s in d['additional_inputs']]
+        for number,fact in individual[v].items():
+            d['tickets'][int(number)-1]['dossier']=fact.format(code=code,next_code=d['controls']['next_code'])
+        if '1' in individual[v]:
+            d['tickets'][1]['dossier']='Отдельный случай второго пользователя. '+d['tickets'][0]['dossier']+' Самостоятельная проверка на его месте ещё не выполнена.'
+        d['additional_inputs']=[fact+' '+method for fact,method in zip(d['additional_inputs'],methods[v])]
     d['materials']={title:f'materials/{v}/{path}' for title,path in [('Досье десяти обращений','dossier.html'),('Исходные данные и реестр','raw-data.html'),('CSV своей области','sample.csv'),('Проверка CSV','csv-lab.html'),('Контрольная рамка и отрезок','control.svg'),('Модель страницы печати','print-lab.html')]}
     if v=='DEMO':d['materials']['Учебный портал расписания']='materials/DEMO/portal/index.html'
     data.append(d)
 dump(ROOT/'content/demo-source.json',data[0]);dump(ROOT/'content/stands.json',data)
-CSVLAB='''<!doctype html><html lang="ru"><meta charset="utf-8"><title>Проверка CSV</title><style>body{font:18px/1.6 Arial;max-width:1000px;margin:30px auto;padding:20px}label{display:block;margin:15px}td,th{border:1px solid #999;padding:15px}table{border-collapse:collapse}pre{background:#f4f4f6;padding:20px}</style><h1>Проверка CSV своей области</h1><p>Выбрать sample.csv этого комплекта. Исходный файл не изменяется.</p><label>Файл CSV <input id="file" type="file" accept=".csv"></label><label>Кодировка <select id="encoding"><option value="utf-8">UTF-8</option><option value="windows-1251">Windows-1251</option></select></label><label>Разделитель <select id="delimiter"><option value=",">Запятая</option><option value=";">Точка с запятой</option></select></label><label>Тип первого столбца <select id="type"><option value="number">Число</option><option value="text">Текст</option></select></label><h2>Исходный текст</h2><pre id="source"></pre><h2>Результат чтения</h2><div id="result"></div><p id="status" role="status"></p><script>
-const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));let bytes;
-function parse(s,del){let rows=[],row=[],v='',quoted=false;for(let i=0;i<s.length;i++){let c=s[i];if(c==='"'){if(quoted&&s[i+1]==='"'){v+='"';i++}else quoted=!quoted}else if(!quoted&&c===del){row.push(v);v=''}else if(!quoted&&c==='\\n'){row.push(v.replace(/\\r$/,''));rows.push(row);row=[];v=''}else v+=c}if(v||row.length){row.push(v);rows.push(row)}return rows}
-function render(){if(!bytes)return;const text=new TextDecoder($('#encoding').value).decode(bytes);$('#source').textContent=text;const rows=parse(text,$('#delimiter').value);$('#result').innerHTML='<table>'+rows.map((r,i)=>'<tr>'+r.map((v,j)=>{if(i&&j===0&&$('#type').value==='number'&&/^\\d+$/.test(v))v=String(Number(v));return '<'+(i?'td':'th')+'>'+esc(v)+'</'+(i?'td':'th')+'>'}).join('')+'</tr>').join('')+'</table>';$('#status').textContent='Строк данных: '+(rows.length-1)+'; столбцов в заголовке: '+rows[0].length}
-$('#file').onchange=async e=>{bytes=await e.target.files[0].arrayBuffer();render()};for(const id of ['encoding','delimiter','type'])$('#'+id).onchange=render;</script></html>'''
 PRINTLAB='''<!doctype html><html lang="ru"><meta charset="utf-8"><title>Проверка макета печати</title><style>body{font:18px/1.5 Arial;margin:25px}#page{width:600px;height:430px;border:2px solid #333;overflow:hidden;background:#f4f4f6;margin:20px 0}#sheet{box-sizing:border-box;width:596px;height:425px;border:3px solid #ed131c;position:relative;transform-origin:top left;background:white;padding:35px}#bottom{position:absolute;bottom:10px;left:30px}select{font:inherit}</style><h1>Учебный макет сертификата</h1><p>Модель границы страницы показывает влияние масштаба. Она не подтверждает физическую печать.</p><label>Масштаб <select id="scale"><option value="1.1">110 %</option><option value="1">100 %</option></select></label><div id="page"><article id="sheet"><h2>СЕРТИФИКАТ</h2><p>Учебный курс технической поддержки</p><p>Контроль: четыре стороны рамки и нижняя строка.</p><p id="bottom">Нижняя строка · учебный образец</p></article></div><p id="result" role="status"></p><script>const s=document.querySelector('#scale');function render(){document.querySelector('#sheet').style.transform='scale('+s.value+')';document.querySelector('#result').textContent=Number(s.value)>1?'Часть рамки и нижняя строка выходят за границу страницы.':'Четыре стороны рамки и нижняя строка находятся внутри страницы.'}s.onchange=render;render()</script></html>'''
+CSVLAB=(ROOT/'content/csv-lab.html').read_text(encoding='utf-8')
 for d in data:
     v=d['variant'];target=SITE/'stands'/('demo' if v=='DEMO' else 'v'+v);target.mkdir(parents=True,exist_ok=True)
     for f in (ROOT/'support-desk').glob('*'):
@@ -81,6 +85,8 @@ for d in data:
     labstyle="@font-face{font-family:'Golos Text';src:url('../../fonts/GolosText.ttf');font-weight:100 900}body{font-family:'Golos Text',Arial,sans-serif!important;color:#1c1c1c}select,input,button{font:inherit;border:1px solid #dfe1e5;border-radius:8px;padding:9px 12px}h1{font-weight:700;letter-spacing:-.6px}table{border-collapse:collapse}td,th{border:0!important;border-bottom:1px solid #dfe1e5!important}pre{border-radius:14px}"
     write(mat/'csv-lab.html',CSVLAB.replace('<style>','<style>'+labstyle));write(mat/'print-lab.html',PRINTLAB.replace('<style>','<style>'+labstyle))
     write(mat/'control.svg','<svg xmlns="http://www.w3.org/2000/svg" width="120mm" height="80mm" viewBox="0 0 120 80"><rect x="1" y="1" width="118" height="78" fill="white" stroke="black"/><path d="M10 40H110 M10 35V45 M110 35V45" stroke="black"/><text x="60" y="30" text-anchor="middle" font-size="7">100 mm</text><text x="60" y="65" text-anchor="middle" font-size="5">'+v+'</text></svg>')
+    create_individual_materials(d,mat,standalone,write)
+    write(target/'stand.js','window.INIT_DATA='+json.dumps(d,ensure_ascii=False)+';\n')
     raw=f'<h2>Область {h(v)} · {h(d["subject"])}</h2><p>Это исходные сведения учебного случая. Собственные измерения отмечаются отдельно.</p><h2>Контрольная строка CSV</h2><pre>001205;Учебная запись {v};2026-11-24;"Город, улица 1"</pre><p>UTF-8, разделитель «;», четыре столбца, первая колонка — текстовый код. Две строки данных.</p><h2>Реестр</h2><p>Учебные записи 001205 и 001206; действующая редакция документов v2. M-01 «Учебное подтверждение» — «Спам»; M-02 «Приглашение» — «Рассылки».</p><p>Имена archive-A (0 байт), archive-B (120 КБ), small.pdf (1 МБ), large.pdf (3 МБ), photo.heic (1 МБ) обозначают сведения досье. Эти файлы не выдаются за предоставленные или восстановленные. Реальные файлы: sample.csv и control.svg; цифровые проверки: csv-lab.html и print-lab.html.</p><h2>Полномочия</h2><p>Пользователь — собственные объекты; оператор — назначенные обращения; администратор — согласованные изменения прав. Реальные пароли и персональные данные не используются.</p>'+''.join(f'<h3>{h(t)}</h3><p>{h(i)}</p>' for t,i in zip(d['additional_tasks'],d['additional_inputs']))
     raw=raw.replace('001205',d['controls']['code']).replace('001206',d['controls']['next_code'])
     write(mat/'raw-data.html',standalone('Исходные данные',raw))
@@ -93,6 +99,7 @@ for d in data:
         for f in portal.glob('*.html'):write(f,f.read_text(encoding='utf-8').replace("url('../../fonts/","url('../../../fonts/"))
     dump(DL/('demo-tickets.json' if v=='DEMO' else 'variant-'+v+'.json'),d);dump(target/'initial.json',d)
     shutil.copytree(mat,SITE/'support-desk'/'materials'/v,dirs_exist_ok=True)
+dump(ROOT/'content/stands.json',data)
 for f in (ROOT/'support-desk').glob('*'):
     if f.is_file():write(SITE/'support-desk'/f.name,f.read_text(encoding='utf-8'))
 (SITE/'support-desk/fonts').mkdir(exist_ok=True)

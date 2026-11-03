@@ -39,6 +39,7 @@ def check_local_links() -> None:
 
 def main() -> None:
     course = json.loads((ROOT / "content/course.json").read_text(encoding="utf-8"))
+    stands = {item['variant']: item for item in json.loads((ROOT / 'content/stands.json').read_text(encoding='utf-8'))}
     assert course["meta"] == {
         "title": "ПМ.01 Поддержка клиентов по вопросам эксплуатации технологических компонентов",
         "organization": "Университет «Синергия»",
@@ -60,10 +61,22 @@ def main() -> None:
         assert (DL / f"variant-{area['variant']}.json").is_file()
         variant = area['variant']
         initial = json.loads((DL / f'variant-{variant}.json').read_text(encoding='utf-8'))
+        assert initial == stands[variant], 'PDF source and individual stand metadata differ: '+variant
         assert [(t['id'], t['topic'], t['description']) for t in initial['tickets']] == [(t['id'], t['topic'], t['description']) for t in area['tickets']]
         assert initial['additional_tasks'] == area['additional_tasks']
         assert initial['knowledge_card_topics'] == area['knowledge_card_topics']
         assert len(initial['additional_inputs']) == 2 and all(t['dossier'] for t in initial['tickets'])
+        assert all('Проверка:' in text for text in initial['additional_inputs']), variant
+        assert 'Условия и порядок индивидуальных сравнений' in initial['materials'], variant
+        if variant == '01':
+            assert 'завершающий символ не указаны' in initial['tickets'][3]['dossier']
+            assert 'Scan-A' in initial['tickets'][4]['dossier']
+            assert 'панель поиска' in initial['tickets'][6]['dossier']
+        if variant == '08':
+            assert '1205' not in initial['tickets'][0]['dossier'], 'stale numeric demo value'
+        if variant == '04':
+            assert 'двоеточие' in initial['tickets'][6]['dossier']
+            assert 'sample.csv' not in initial['tickets'][6]['dossier'], 'filename is not a CSV encoding case'
         assert initial['controls']['code'] == f'{int(variant):03d}205'
         assert (DL / f'variant-{variant}.pdf').read_bytes().startswith(b'%PDF-')
         with zipfile.ZipFile(DL / f'stand-{variant}.zip') as package:
@@ -71,6 +84,15 @@ def main() -> None:
             assert zipped == initial
             assert all(path in package.namelist() for path in initial['materials'].values())
             assert package.read(f'materials/{variant}/sample.csv').decode('utf-8').splitlines()[1].startswith(initial['controls']['code']+';')
+            if variant in ['13', '14', '25', '30']:
+                name = {'13': 'swapped.csv', '14': 'headers.csv', '25': 'serial.csv', '30': 'duplicates.csv'}[variant]
+                text = package.read(f'materials/{variant}/{name}').decode('utf-8')
+                assert initial['controls']['code'] in text
+                if variant == '14': assert text.startswith('Артикул;Наименование\n')
+                if variant == '25': assert 'SN-'+initial['controls']['code'] in text
+                if variant == '30':
+                    rows = text.splitlines()[1:]
+                    assert len(rows) == 3 and len(set(rows)) == 2 and rows[0] == rows[2]
 
     required = {
         "assignment.pdf", "guide.pdf", "report-template.md", "report-template.docx",
