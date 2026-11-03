@@ -10,14 +10,19 @@ def h(s):return html.escape(str(s))
 course=json.loads((ROOT/'content/course.json').read_text(encoding='utf-8'))
 profiles=json.loads((ROOT/'content/case-inputs.json').read_text(encoding='utf-8'))
 STYLE='''@font-face{font-family:Golos;src:url("fonts/GolosText.ttf")}*{box-sizing:border-box}body{margin:0;font:16px/1.65 Golos,Arial,sans-serif;color:#1c1c1c}header{background:#1c1c1c;color:white;border-bottom:6px solid #ed131c;padding:30px}h1{font-size:36px;line-height:1.2}h2{font-size:23px}main{max-width:1080px;margin:auto;padding:30px}.block{background:#f4f4f6;border-radius:14px;padding:24px;margin:20px 0}.route{border-left:2px solid #ddd;padding-left:25px}.check{border-top:1px solid #dfe1e5;padding-top:12px}a{color:#a40d14}header a{color:white}nav,.links{display:flex;gap:24px;flex-wrap:wrap}.button{padding:12px 18px;border:1px solid #aaa;border-radius:6px;display:inline-block;text-decoration:none}td,th{border:1px solid #ddd;padding:12px;text-align:left}table{border-collapse:collapse}img{max-width:100%}pre,code{white-space:pre-wrap;overflow-wrap:anywhere}@media print{nav,.screen{display:none}@page{size:A4;margin:20mm 20mm 20mm 30mm}body{font-size:12pt}.block{break-inside:avoid}header{background:white;color:black;padding:0}h1{font-size:24pt}main{padding:0}}'''
+STYLE=(ROOT/'content/materials.css').read_text(encoding='utf-8')
 write(SITE/'assets/materials.css',STYLE)
 assert (SITE/'assets/fonts/GolosText.ttf').is_file(), 'The bundled Golos Text font is required.'
 assert (SITE/'assets/fonts/OFL.txt').is_file(), 'The font license must accompany the source.'
 def page(title,body,nav=True):
     return f'<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{h(title)}</title><link rel="stylesheet" href="assets/materials.css"></head><body><header><p>Учебная практика · ПМ.01</p><h1>{h(title)}</h1>'+('<nav><a href="index.html">Задание</a><a href="lessons.html">Методические рекомендации</a><a href="areas.html">Предметные области</a></nav>' if nav else '')+f'</header><main>{body}</main></body></html>'
-def standalone(title,body):return page(title,body,False).replace('<link rel="stylesheet" href="assets/materials.css">','<style>'+STYLE[STYLE.index('*{'):].replace('Golos,Arial','Arial')+'</style>')
+def standalone(title,body):return page(title,body,False).replace('<link rel="stylesheet" href="assets/materials.css">','<style>'+STYLE.replace("url('fonts/GolosText.ttf')","url('../../fonts/GolosText.ttf')")+'</style>')
 def block(title,text,check=''):
-    return f'<section class="block"><h2>{h(title)}</h2>{text}'+(f'<p class="check"><b>Результат:</b> {h(check)}</p>' if check else '')+'</section>'
+    import re
+    if title.startswith('Вариант '):return f'<header class="area-head"><p>ПМ.01 · Индивидуальная область</p><h2>{h(title)}</h2>{text}</header>'
+    match=re.match(r'^(\d+)\.\s+(.*)',title)
+    card=f'<div class="doc-card"><h3>{h(match[2] if match else title)}</h3>{text}'+(f'<p class="doc-result"><b>Результат:</b> {h(check)}</p>' if check else '')+'</div>'
+    return f'<section class="doc-row route-step"><span class="doc-number" aria-hidden="true">{h(match[1])}</span>{card}</section>' if match else '<section class="plain-card">'+card+'</section>'
 def other_fact(topic,n):
     t=topic.lower()
     if n==9:return 'Подтверждения полномочий на чужие данные, изменение прав или отключение защиты нет. Действие не выполнять; сформулировать границу и передачу уполномоченному специалисту.'
@@ -66,11 +71,15 @@ PRINTLAB='''<!doctype html><html lang="ru"><meta charset="utf-8"><title>Пров
 for d in data:
     v=d['variant'];target=SITE/'stands'/('demo' if v=='DEMO' else 'v'+v);target.mkdir(parents=True,exist_ok=True)
     for f in (ROOT/'support-desk').glob('*'):
-        if f.is_file():shutil.copy2(f,target/f.name)
+        if f.is_file():write(target/f.name,f.read_text(encoding='utf-8'))
+    (target/'fonts').mkdir(exist_ok=True)
+    shutil.copy2(SITE/'assets/fonts/GolosText.ttf',target/'fonts/GolosText.ttf')
+    shutil.copy2(SITE/'assets/fonts/OFL.txt',target/'fonts/OFL.txt')
     write(target/'stand.js','window.INIT_DATA='+json.dumps(d,ensure_ascii=False)+';\n')
     mat=target/'materials'/v;mat.mkdir(parents=True,exist_ok=True)
     write(mat/'sample.csv','code;title;date;address\n'+d['controls']['code']+';Учебная запись '+v+';2026-11-24;"Город, улица 1"\n'+d['controls']['next_code']+';Вторая запись '+v+';2026-11-25;"Город, улица 2"\n')
-    write(mat/'csv-lab.html',CSVLAB);write(mat/'print-lab.html',PRINTLAB)
+    labstyle="@font-face{font-family:'Golos Text';src:url('../../fonts/GolosText.ttf');font-weight:100 900}body{font-family:'Golos Text',Arial,sans-serif!important;color:#1c1c1c}select,input,button{font:inherit;border:1px solid #dfe1e5;border-radius:8px;padding:9px 12px}h1{font-weight:700;letter-spacing:-.6px}table{border-collapse:collapse}td,th{border:0!important;border-bottom:1px solid #dfe1e5!important}pre{border-radius:14px}"
+    write(mat/'csv-lab.html',CSVLAB.replace('<style>','<style>'+labstyle));write(mat/'print-lab.html',PRINTLAB.replace('<style>','<style>'+labstyle))
     write(mat/'control.svg','<svg xmlns="http://www.w3.org/2000/svg" width="120mm" height="80mm" viewBox="0 0 120 80"><rect x="1" y="1" width="118" height="78" fill="white" stroke="black"/><path d="M10 40H110 M10 35V45 M110 35V45" stroke="black"/><text x="60" y="30" text-anchor="middle" font-size="7">100 mm</text><text x="60" y="65" text-anchor="middle" font-size="5">'+v+'</text></svg>')
     raw=f'<h2>Область {h(v)} · {h(d["subject"])}</h2><p>Это исходные сведения учебного случая. Собственные измерения отмечаются отдельно.</p><h2>Контрольная строка CSV</h2><pre>001205;Учебная запись {v};2026-11-24;"Город, улица 1"</pre><p>UTF-8, разделитель «;», четыре столбца, первая колонка — текстовый код. Две строки данных.</p><h2>Реестр</h2><p>Учебные записи 001205 и 001206; действующая редакция документов v2. M-01 «Учебное подтверждение» — «Спам»; M-02 «Приглашение» — «Рассылки».</p><p>Имена archive-A (0 байт), archive-B (120 КБ), small.pdf (1 МБ), large.pdf (3 МБ), photo.heic (1 МБ) обозначают сведения досье. Эти файлы не выдаются за предоставленные или восстановленные. Реальные файлы: sample.csv и control.svg; цифровые проверки: csv-lab.html и print-lab.html.</p><h2>Полномочия</h2><p>Пользователь — собственные объекты; оператор — назначенные обращения; администратор — согласованные изменения прав. Реальные пароли и персональные данные не используются.</p>'+''.join(f'<h3>{h(t)}</h3><p>{h(i)}</p>' for t,i in zip(d['additional_tasks'],d['additional_inputs']))
     raw=raw.replace('001205',d['controls']['code']).replace('001206',d['controls']['next_code'])
@@ -81,10 +90,14 @@ for d in data:
         write(portal/'old.html',standalone('Устаревший маршрут','<p>Сохранённый маршрут больше не используется.</p><a href="index.html">Открыть главную страницу учебного портала</a>'))
         write(portal/'index.html',standalone('Учебный портал · расписание','<p><a href="schedule-a.html">Группа A</a></p><p><a href="schedule-b.html">Группа B</a></p><p><a href="old.html">Старая сохранённая ссылка</a></p>'))
         for group,time in [('a','10:00'),('b','12:00')]:write(portal/('schedule-'+group+'.html'),standalone('Расписание группы '+group.upper(),f'<p>Учебный курс · 24.11.2026 · {time}</p><a href="index.html">К выбору группы</a>'))
+        for f in portal.glob('*.html'):write(f,f.read_text(encoding='utf-8').replace("url('../../fonts/","url('../../../fonts/"))
     dump(DL/('demo-tickets.json' if v=='DEMO' else 'variant-'+v+'.json'),d);dump(target/'initial.json',d)
     shutil.copytree(mat,SITE/'support-desk'/'materials'/v,dirs_exist_ok=True)
 for f in (ROOT/'support-desk').glob('*'):
-    if f.is_file():shutil.copy2(f,SITE/'support-desk'/f.name)
+    if f.is_file():write(SITE/'support-desk'/f.name,f.read_text(encoding='utf-8'))
+(SITE/'support-desk/fonts').mkdir(exist_ok=True)
+shutil.copy2(SITE/'assets/fonts/GolosText.ttf',SITE/'support-desk/fonts/GolosText.ttf')
+shutil.copy2(SITE/'assets/fonts/OFL.txt',SITE/'support-desk/fonts/OFL.txt')
 assignment=[
 ('Обработать десять обращений','Зарегистрировать все обращения назначенной области, сохранить исходные факты, написать краткий пересказ, выбрать категорию и статус, обосновать влияние. Для неполных сообщений сформулировать вопросы. Не объединять разные случаи только из-за одинаковой темы.'),
 ('Подготовить пять ответов','Оформить ответы по обращениям 01, 04, 06, 08 и 10. Включить понятные действия, проверку результата, профилактику при применимости и условие передачи специалисту. Не обещать невыполненное исправление.'),
@@ -97,7 +110,8 @@ write(SITE/'index.html',page('Поддержка клиентов по вопр�
 areas='<article class="card area-card">'+block('Демонстрационная область','<p>Центр дополнительного образования. Образец показывает способ работы; отдельная полная сдача демонстрации не требуется.</p><p><a href="stands/demo/index.html">Открыть образец</a> · <a href="downloads/stand-demo.zip">Скачать автономно</a> · <a href="downloads/demo-result.zip">Готовый результат для сверки</a></p>')+'</article>'
 for d in data[1:]:
     v=d['variant'];areas+=f'<article class="card area-card" id="v{v}">'+block('Вариант '+v+'. '+d['subject'],f'<p>{h(d.get("context",""))}</p><p>Индивидуальная работа {h(d["stand_id"])}: обращения {h(d["tickets"][0]["id"])}–{h(d["tickets"][-1]["id"])}. Код работы назначается преподавателем; имён студентов в исходных данных нет.</p><p><a href="stands/v{v}/index.html">Открыть свой стенд</a> · <a href="downloads/stand-{v}.zip">Скачать свой стенд</a> · <a href="downloads/variant-{v}.pdf">Карточка области · PDF</a> · <a href="downloads/variant-{v}.json">Исходные обращения · JSON</a></p>')+'<div class="route">'
-    for title,text,check in [('1. Подготовить собственные данные',f'Распаковать stand-{v}.zip в отдельную папку, открыть index.html. Для продолжения восстановить собственный JSON вместо загрузки исходника.',f'В заголовке «{d["subject"]}», десять ID своего варианта.'),('2. Обработать обращения','Выполнить общее задание: десять карточек, пять ответов и две карты. Темы карт: '+'; '.join(d['knowledge_card_topics'])+'.','Обоснованы категории, статусы, влияние, уточнения и границы.'),('3. Выполнить индивидуальные условия','\n'.join(t+'. '+i for t,i in zip(d['additional_tasks'],d['additional_inputs'])),'В разделе «Данные стенда» сохранены решения обеих задач.'),('4. Подготовить сдачу','Скачать документы, добавить доказательства в отчёт. Экспортировать JSON, закрыть сеанс, восстановить работу и проверить собственный ответ и обе карты.','Документы относятся к своей области; данные демонстрации не перенесены автоматически.')]:areas+=block(title,'<p>'+h(text).replace('\n','</p><p>')+'</p>',check)
+    areas+=f'<div class="identity"><div><strong>Индивидуальная область — {h(d["stand_id"])}</strong><p>Собственные обращения, файлы и условия.</p></div><div><strong>Образец — DEMO</strong><p>Показывает способ работы. Контрольные значения берутся из своей области.</p></div></div>'
+    for title,text,check in [('1. Подготовить собственные данные',f'Распаковать stand-{v}.zip в отдельную папку, открыть index.html. Для продолжения восстановить собственный JSON вместо загрузки исходника.',f'В заголовке «{d["subject"]}», десять ID своего варианта.'),('2. Обработать обращения','Выполнить общее задание: десять карточек, пять ответов и две карты. Темы карт: '+'; '.join(d['knowledge_card_topics'])+'.','Обоснованы категории, статусы, влияние, уточнения и границы.'),('3. Выполнить индивидуальные условия','\n'.join(t+'. '+i for t,i in zip(d['additional_tasks'],d['additional_inputs'])),'В разделе «Данные стенда» сохранены решения обеих задач.'),('4. Подготовить сдачу','Скачать документы, добавить доказательства в отчёте. Экспортировать JSON, закрыть сеанс, восстановить работу и проверить собственный ответ и обе карты.','Документы относятся к своей области; данные демонстрации не перенесены автоматически.')]:areas+=block(title,'<p>'+h(text).replace('\n','</p><p>')+'</p>',check)
     areas+='</div></article>'
 write(SITE/'areas.html',page('Предметные области',areas))
 print('Prepared 30 personal stands and a separate demonstration.')

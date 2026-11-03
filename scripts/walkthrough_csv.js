@@ -1,4 +1,5 @@
 async (page) => {
+  await page.setViewportSize({width:850,height:1000});
   await page.getByLabel('Файл CSV').setInputFiles('site/stands/demo/materials/DEMO/sample.csv');
   await page.getByRole('combobox',{name:'Разделитель'}).selectOption(';');
   await page.screenshot({path:'site/assets/walkthrough/07-csv-number.png',fullPage:true});

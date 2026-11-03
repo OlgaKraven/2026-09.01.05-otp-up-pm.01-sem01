@@ -4,3 +4,4 @@
 *.png binary
 *.ttf binary
 site/** -text
+site/**/OFL.txt -whitespace
