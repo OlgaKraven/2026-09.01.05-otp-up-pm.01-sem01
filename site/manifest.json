@@ -8,8 +8,8 @@
     },
     {
       "path": "assets/favicon.svg",
-      "bytes": 207,
-      "sha256": "4d11c3923a0c231e244ba64f5714e45fd998f411b1e0ffa679dfc7979c59fe1d"
+      "bytes": 206,
+      "sha256": "a858bf2fe727230d8ce9ad583c22bd19c344c57d28c3a13631130948a6eb17a7"
     },
     {
       "path": "assets/fonts/Golos.ttf",
@@ -38,8 +38,8 @@
     },
     {
       "path": "assets/style.css",
-      "bytes": 6542,
-      "sha256": "5e79704399b30180c13c356799b3ee98a90d566aa0b2b6bfec4ccffecf923d14"
+      "bytes": 6536,
+      "sha256": "c9a2fbcecb6cdad94b7bb7651329b4b300ca835ee27ac5334589ec2b04aef3d8"
     },
     {
       "path": "assets/walkthrough/01-start.png",
