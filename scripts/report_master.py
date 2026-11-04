@@ -175,7 +175,7 @@ def figure_slot(doc, label, tag, number, bookmark_name):
 
 def data_table(doc, title, number, labels, widths, tag, *, fixed_labels=None):
     p = doc.add_paragraph(style="Table caption")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     p.add_run("Таблица ")
     field(p, r"SEQ Таблица \* ARABIC", str(number))
     p.add_run(" — " + title)
@@ -213,7 +213,7 @@ def data_table(doc, title, number, labels, widths, tag, *, fixed_labels=None):
 
 
 def black_text(doc):
-    """Keep text black, including automatically styled and visited hyperlinks."""
+    """Use the report font and black text, including fields and list markers."""
     for name in ("Hyperlink", "FollowedHyperlink"):
         if name not in doc.styles:
             doc.styles.add_style(name, WD_STYLE_TYPE.CHARACTER, builtin=True)
@@ -236,9 +236,25 @@ def black_text(doc):
         rdefault.append(rpr)
     if rpr.find(qn("w:color")) is None:
         rpr.append(el("color", val="000000"))
+    for level in doc.part.numbering_part.element.iter(qn("w:lvl")):
+        if level.find(qn("w:rPr")) is None:
+            level.append(el("rPr"))
     for part in doc.part.package.parts:
         root = getattr(part, "element", None)
         if root is not None:
+            for run in root.iter(qn("w:r")):
+                if run.find(qn("w:rPr")) is None:
+                    run.insert(0, el("rPr"))
+            for props in root.iter(qn("w:rPr")):
+                fonts = props.find(qn("w:rFonts"))
+                if fonts is None:
+                    fonts = el("rFonts")
+                    props.insert(0, fonts)
+                fonts.attrib.clear()
+                for attr in ("ascii", "hAnsi", "eastAsia", "cs"):
+                    fonts.set(qn("w:" + attr), FONT)
+                if props.find(qn("w:color")) is None:
+                    props.append(el("color", val="000000"))
             for color in root.iter(qn("w:color")):
                 color.attrib.clear()
                 color.set(qn("w:val"), "000000")
@@ -274,7 +290,7 @@ def build(output: Path):
     new_style(doc, "Table text", size=12, indent=0, line=1,
               align=WD_ALIGN_PARAGRAPH.CENTER)
     new_style(doc, "Table caption", size=12, indent=0, line=1,
-              align=WD_ALIGN_PARAGRAPH.CENTER, before=10, after=5)
+              align=WD_ALIGN_PARAGRAPH.LEFT, before=10, after=5)
     configure_style(doc.styles["Footer"], size=12, indent=0, line=1,
                     align=WD_ALIGN_PARAGRAPH.CENTER)
     numbering(doc)

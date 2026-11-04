@@ -133,8 +133,8 @@
     },
     {
       "path": "downloads/report-template.docx",
-      "bytes": 38523,
-      "sha256": "ea9597b757f094b491a3cbeaaa9dfdf63f9570e38e73170494cfa8da8faf09d4"
+      "bytes": 38759,
+      "sha256": "9ee90c3ba51466e5fc3ddf09565443d76b2d8946374df89be840ff7336c05636"
     },
     {
       "path": "downloads/report-template.md",
@@ -603,8 +603,8 @@
     },
     {
       "path": "downloads/Отчет о выполнении.docx",
-      "bytes": 38523,
-      "sha256": "ea9597b757f094b491a3cbeaaa9dfdf63f9570e38e73170494cfa8da8faf09d4"
+      "bytes": 38759,
+      "sha256": "9ee90c3ba51466e5fc3ddf09565443d76b2d8946374df89be840ff7336c05636"
     },
     {
       "path": "index.html",
