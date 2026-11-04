@@ -39,6 +39,11 @@ def check_local_links() -> None:
 
 def main() -> None:
     course = json.loads((ROOT / "content/course.json").read_text(encoding="utf-8"))
+    assert course['schema_version'] == 2
+    assert course['assignment_requirements'] == {'tickets': 10, 'responses': [1, 4, 6, 8, 10], 'knowledge_cards': 2}
+    for kind in ['assignment', 'guide', 'areas']:
+        assert isinstance(course[kind], list) and course[kind]
+        assert all(isinstance(page.get('title'), str) and isinstance(page.get('blocks'), list) and page['blocks'] for page in course[kind])
     stands = {item['variant']: item for item in json.loads((ROOT / 'content/stands.json').read_text(encoding='utf-8'))}
     assert course["meta"] == {
         "title": "ПМ.01 Поддержка клиентов по вопросам эксплуатации технологических компонентов",

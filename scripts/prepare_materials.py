@@ -47,6 +47,7 @@ demo_facts=['Старый маршрут portal/old.html больше не ис�
 data=[]
 for source in [demo]+course['areas']:
     d=copy.deepcopy(source);v=d['variant'];pr=profiles.get(v)
+    d.pop('title',None);d.pop('blocks',None)
     d['stand_id']='pm01-'+v.lower()
     for i,t in enumerate(d['tickets'],1):
         if v=='DEMO':t['dossier']=demo_facts[i-1]

@@ -133,13 +133,13 @@
     },
     {
       "path": "downloads/report-template.docx",
-      "bytes": 30872,
-      "sha256": "3600dd78a41e54f9f66267f00456ac6b26150a3f44119f8da8a6939ba5181d88"
+      "bytes": 34649,
+      "sha256": "e5c04c26cd3cddfbee1962e33eee8f285698aba25f4a3df1fa5b2d110ae1228d"
     },
     {
       "path": "downloads/report-template.md",
-      "bytes": 2405,
-      "sha256": "6d2b84804b162e79ce9e141ac185eb6446e06615b367dad1e18f6118372e00a5"
+      "bytes": 9173,
+      "sha256": "34bee91ae8f138f5e2a2e06b6760dfee04f4b0a560877b852e6a909eb866c0d3"
     },
     {
       "path": "downloads/stand-01.zip",
