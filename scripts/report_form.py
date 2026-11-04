@@ -20,7 +20,10 @@ def build():
   if item.tag!=qn('w:sectPr'):doc.element.body.remove(item)
  md=['# Отчет о выполнении','', 'Учебная практика ПМ.01','']
  def p(text,style=None):doc.add_paragraph(text,style=style);md.extend([text,''])
- def answer(label,tag,lines=2):response(doc,label,tag,lines);md.extend([label+': [Заполнить собственными данными]',''])
+ def answer(label,tag,lines=2):
+  start=len(doc.paragraphs);response(doc,label,tag,lines)
+  for para in doc.paragraphs[start:-1]:para.paragraph_format.keep_with_next=True
+  md.extend([label+': [Заполнить собственными данными]',''])
  def link(label,url):
   p(label,style='Field label');paragraph=doc.add_paragraph();paragraph.paragraph_format.first_line_indent=Mm(0)
   element=OxmlElement('w:hyperlink');element.set(qn('r:id'),paragraph.part.relate_to(url,RT.HYPERLINK,is_external=True));run=OxmlElement('w:r');text=OxmlElement('w:t');text.text=url;run.append(text);element.append(run);paragraph._p.append(element);md.extend([url,''])
@@ -45,7 +48,7 @@ def build():
  ]
  figure_number=0
  for index,(title,hint,pictures) in enumerate(steps,1):
-  heading(doc,title,2,new_page=index>1);md.extend(['## 2.'+str(index)+'. '+title,'',hint,'']);p(hint)
+  heading(doc,title,2);md.extend(['## 2.'+str(index)+'. '+title,'',hint,'']);p(hint)
   answer('Исходные данные и ожидаемый результат','stage'+str(index)+'_initial')
   answer('Выполненные действия','stage'+str(index)+'_actions',3)
   answer('Фактический результат и проверка','stage'+str(index)+'_actual')
@@ -53,7 +56,7 @@ def build():
    answer('Задача 1 — собственное условие, решение и проверка','extra1',3);answer('Задача 2 — собственное условие, решение и проверка','extra2',3)
   for title in pictures:
    figure_number+=1
-   para=doc.add_paragraph();para.add_run('Подтверждение этапа привести на рис. ');field(para,'REF PM01Figure'+str(figure_number)+' \\h',str(figure_number));para.add_run('. Заменить подсказку в рамке собственным изображением, сохраняя пропорции. Область допускает увеличение.')
+   para=doc.add_paragraph();para.add_run('Результат показать на рис. ');field(para,'REF PM01Figure'+str(figure_number)+' \\h',str(figure_number));para.add_run('. Вставить собственное изображение; сохранить пропорции.')
    figure_slot(doc,title,'picture_'+str(figure_number),figure_number,'PM01Figure'+str(figure_number));md.extend(['[Место для рисунка '+str(figure_number)+'; не менее 60 мм]','', 'Рисунок '+str(figure_number)+' — '+title,''])
   answer('Вывод по этапу и объяснение расхождений','stage'+str(index)+'_conclusion')
  heading(doc,'Итоговая проверка и сдача',new_page=True)
