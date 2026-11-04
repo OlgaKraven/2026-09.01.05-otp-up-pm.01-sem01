@@ -133,13 +133,13 @@
     },
     {
       "path": "downloads/report-template.docx",
-      "bytes": 38806,
-      "sha256": "c4cc3c25905fe56739928977c9e26eefb91b93be14980c3b83d4c45b250a2553"
+      "bytes": 38523,
+      "sha256": "ea9597b757f094b491a3cbeaaa9dfdf63f9570e38e73170494cfa8da8faf09d4"
     },
     {
       "path": "downloads/report-template.md",
-      "bytes": 11043,
-      "sha256": "4e1ba8786874b5c058fd3ccae4fd1f5e536f23df138d60d4870de2134c9337e7"
+      "bytes": 10795,
+      "sha256": "e39f8395472ebb796b99fb5dedf0c490091336cdb6f1c0bfc15585c1dfee6238"
     },
     {
       "path": "downloads/stand-01.zip",
@@ -603,8 +603,8 @@
     },
     {
       "path": "downloads/Отчет о выполнении.docx",
-      "bytes": 38806,
-      "sha256": "c4cc3c25905fe56739928977c9e26eefb91b93be14980c3b83d4c45b250a2553"
+      "bytes": 38523,
+      "sha256": "ea9597b757f094b491a3cbeaaa9dfdf63f9570e38e73170494cfa8da8faf09d4"
     },
     {
       "path": "index.html",
