@@ -1,6 +1,7 @@
 """Render the complete teaching sources and package the verified offline stands."""
 from __future__ import annotations
 import html, json, os, shutil, zipfile
+from urllib.parse import quote
 from pathlib import Path
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
@@ -133,7 +134,7 @@ for d in data[1:]:
 Doc(DL/'assignment.pdf','ПМ.01 · Список предметных областей').multiBuild(story)
 # Guide: the complete assignment precedes files, which precede the walkthrough.
 story=heading('Методические рекомендации','Обработка обращений · ПМ.01')+[P('Пошаговый разбор на центре дополнительного образования и перенос на индивидуальную предметную область. Снимки показывают выполненный проход учебного комплекта.'),PageBreak()]+heading('Содержание')+[toc(),PageBreak()]+full_assignment()+[PageBreak()]+heading('2. Файлы для работы')
-files=[('Демонстрационный стенд — распаковать до разбора','stand-demo.zip'),('Демонстрационные исходные обращения — для общего сервиса','demo-tickets.json'),('Готовый результат — только для сверки','demo-result.zip'),('Пустая форма отчёта','report-template.docx'),('Предметные области и индивидуальные данные','assignment.pdf'),('Общий сервис для импорта JSON','support-desk.zip')]
+files=[('Демонстрационный стенд — распаковать до разбора','stand-demo.zip'),('Демонстрационные исходные обращения — для общего сервиса','demo-tickets.json'),('Готовый результат — только для сверки','demo-result.zip'),('Отчет о выполнении — пустая форма Word',quote('Отчет о выполнении.docx')),('Предметные области и индивидуальные данные','assignment.pdf'),('Общий сервис для импорта JSON','support-desk.zip')]
 for label,file in files:story+=[link(label,BASE+'downloads/'+file)]
 story+=[P('В карточке своей области находятся её отдельный стенд, JSON и PDF. Архив стенда содержит реестр, файлы и досье; готовый демонстрационный результат не используется вместо собственных исходных данных.'),PageBreak()]
 figure=0;html_sections=[]

@@ -100,7 +100,7 @@ def main() -> None:
                     assert len(rows) == 3 and len(set(rows)) == 2 and rows[0] == rows[2]
 
     required = {
-        "assignment.pdf", "guide.pdf", "report-template.md", "report-template.docx",
+        "assignment.pdf", "guide.pdf", "report-template.md", "report-template.docx", "Отчет о выполнении.docx",
         "support-desk.zip", "demo-tickets.json", "demo-result.zip",
         *{f"variant-{i:02d}.json" for i in range(1, 31)},
     }
@@ -108,6 +108,7 @@ def main() -> None:
     for name in ("assignment.pdf", "guide.pdf"):
         assert (DL / name).read_bytes().startswith(b"%PDF-")
     assert zipfile.is_zipfile(DL / "report-template.docx")
+    assert (DL / "Отчет о выполнении.docx").read_bytes() == (DL / "report-template.docx").read_bytes()
     assert zipfile.is_zipfile(DL / "support-desk.zip")
     assert zipfile.is_zipfile(DL / "demo-result.zip")
 

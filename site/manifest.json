@@ -114,7 +114,7 @@
     {
       "path": "downloads/assignment.pdf",
       "bytes": 875346,
-      "sha256": "bac8492ffd3299d992abd17a41501e2204903ec592a73fc42a01d0dbf8e9a1a7"
+      "sha256": "49d046065d85a199294fc2c9421d8edc402316351d40b23e8932fe03d7ddf069"
     },
     {
       "path": "downloads/demo-result.zip",
@@ -128,178 +128,178 @@
     },
     {
       "path": "downloads/guide.pdf",
-      "bytes": 902545,
-      "sha256": "3b05eaea632ab7dec1326e07bb2ac56d66d1e172e8d4f0c27060626e5e0d1f21"
+      "bytes": 902662,
+      "sha256": "3c0694a824d6eb4e814505ae7c5b6c934a94e3ad3fb3144f672e3d01adcf41d5"
     },
     {
       "path": "downloads/report-template.docx",
-      "bytes": 34649,
-      "sha256": "e5c04c26cd3cddfbee1962e33eee8f285698aba25f4a3df1fa5b2d110ae1228d"
+      "bytes": 40578,
+      "sha256": "8b80b9d1100486f776b3dee8b5093162482fff9f167d72de2f9a76e78c23c894"
     },
     {
       "path": "downloads/report-template.md",
-      "bytes": 9173,
-      "sha256": "34bee91ae8f138f5e2a2e06b6760dfee04f4b0a560877b852e6a909eb866c0d3"
+      "bytes": 12027,
+      "sha256": "0d48a01afcd9cc01f1fbe9142b827a2a2b22004604901694f541673b8dc67d57"
     },
     {
       "path": "downloads/stand-01.zip",
       "bytes": 126770,
-      "sha256": "b202045d6a18f1781f290ebdfd708e1e09b2f562fcd2dc94374cfcdf1cded32f"
+      "sha256": "2db0c13bea1c68fcf6c90d2555ca4ed9ecb8a09f3e9687119c5f777fb28f3984"
     },
     {
       "path": "downloads/stand-02.zip",
       "bytes": 129740,
-      "sha256": "6b211bdb1e19c703d39fde6f14087a05249881a13377536f849c82c814887549"
+      "sha256": "ed0ba98b9acf3b59a33a6740f56b98415d98efecba62909fbff5120d7a9e1f0e"
     },
     {
       "path": "downloads/stand-03.zip",
       "bytes": 129521,
-      "sha256": "d596b075945bae5c67ef067744eea08161c2c42a9ccb9a173e622b06063c438f"
+      "sha256": "b8e7619db40bcd1bf510c7c25338c329f10a24b1a3e4a9abced1eeb62693cc3c"
     },
     {
       "path": "downloads/stand-04.zip",
       "bytes": 126554,
-      "sha256": "15d95d8115bd9d6dae2958c3593a13ef570bcee376e31006d972460724302299"
+      "sha256": "538c0a593669f813313e94a46171c76d07d3ff8dc82b3f4198e5a78296f666af"
     },
     {
       "path": "downloads/stand-05.zip",
       "bytes": 126160,
-      "sha256": "a4a46a9d81b22b56e20e8f0038c410880c931ad83e5955382c6529c6f53e8290"
+      "sha256": "fe9f1616c081bc6ac2569a9272f221d77af729c432e6e513825bb8b3af0f3841"
     },
     {
       "path": "downloads/stand-06.zip",
       "bytes": 129569,
-      "sha256": "a34d5f0163b62df1fdd32cfbc4d00922d1f67665c1b07862957a4549b6134c34"
+      "sha256": "8940cfb06c8ef1b6f09a7b881281db73eb15208854eed5e28531971e97a914e8"
     },
     {
       "path": "downloads/stand-07.zip",
       "bytes": 129424,
-      "sha256": "8c7a33c4ef093ce57f805375547801b28f528fb6ed6e26a6cc1b7bdfb4186c49"
+      "sha256": "0ba15fd69ba291013bc00c1c3e2e024bfe4f53a0fc67dd4cea468ab56ca26ff3"
     },
     {
       "path": "downloads/stand-08.zip",
       "bytes": 129792,
-      "sha256": "51358d25d2ad2f73b605c823fffffb7077403066a778bed11286a294e4c17b08"
+      "sha256": "491d9a8c1df6e1b7d2cd2f724a98ec9486c5a99bae36430d2ab6ba7cd6362045"
     },
     {
       "path": "downloads/stand-09.zip",
       "bytes": 126194,
-      "sha256": "09b86c409dcaa7f16cfb8dac17b6d66d5e2912c554f6ea58c0fed3ed17853106"
+      "sha256": "32993c71d736cae05bfcafca397ac086e714d71b2e8567c4ae7d0b5acf243236"
     },
     {
       "path": "downloads/stand-10.zip",
       "bytes": 126525,
-      "sha256": "7ca09ffc30ed32c54e2e0a57230c7c5763a6f13d560029c587b6c9dfcd8c3246"
+      "sha256": "f6e2619541eff9d6869842176fa32054fb01d8985b1b86f7c900bfbfa1b93748"
     },
     {
       "path": "downloads/stand-11.zip",
       "bytes": 126143,
-      "sha256": "133ed31d8b053d302eb36814e66a75f343b3fada82df56fe28f7eaf7a0ee8501"
+      "sha256": "260ea8e9f75caa06d0cde9362800678609c96bf6d2d2e54c74d2d3b0a5673851"
     },
     {
       "path": "downloads/stand-12.zip",
       "bytes": 129335,
-      "sha256": "ba49c1d07f31a5da8d643cfa7bf4a44ed171aeb0f5790570cb3b530337f67937"
+      "sha256": "f3ef60427528c8ae572839be55a5c4647f56182320ba0512b612ee8ccef14218"
     },
     {
       "path": "downloads/stand-13.zip",
       "bytes": 129406,
-      "sha256": "9360050110f44281f6363a0d1a0fe876b63424bd97e69109597a5d2e3237bd23"
+      "sha256": "d10e36ea5440353a048e714c64466e5ff38d1183a899dbb9e54d4abfa3bbaa3a"
     },
     {
       "path": "downloads/stand-14.zip",
       "bytes": 126702,
-      "sha256": "88dec1cd596f829570fe0e16cb18dcb1dc30e980fa29b071694615b0a1466e3d"
+      "sha256": "1a393e2c50a4e5adf8ae11126ce8b95823dc3154058cb8f8fd28ed88011eb831"
     },
     {
       "path": "downloads/stand-15.zip",
       "bytes": 126110,
-      "sha256": "eb7ea0b566ba6900e2cf74a82b6307865f37e591781ebfaf97a723f4d9ff0f32"
+      "sha256": "4e491c23e5197622bb2c1306e94de020436d68452160fd96b78c959f1b770527"
     },
     {
       "path": "downloads/stand-16.zip",
       "bytes": 129364,
-      "sha256": "49af45f13f0b75aac29258808ca6feeb02b543196e718704515577c6dbb9d0c3"
+      "sha256": "1043dc28d6082cc90266d4eada00f256e5f2a70a1a2698a578ab0bac460ac105"
     },
     {
       "path": "downloads/stand-17.zip",
       "bytes": 126321,
-      "sha256": "161a61d41d8aea83dad3b01430f4a68e5d1e13b6f4d68303a480c7d2365387e6"
+      "sha256": "69d2362172c2409e416536e2ea8cfef2876ee2eb04b31941b8b562a294f0d27b"
     },
     {
       "path": "downloads/stand-18.zip",
       "bytes": 126638,
-      "sha256": "256c2ccb9d0d3efbd0ecc34be9db98940f74f3c5f06c29f2bed3560d025f7a19"
+      "sha256": "a347c64cd49adf1ab8eefba7ece7f96380dac5ebbe815fd2462cd69c8dce9dfa"
     },
     {
       "path": "downloads/stand-19.zip",
       "bytes": 126164,
-      "sha256": "f8369a0ddb57f25c30d184f346ce96e3006ee3b01c79d3239bd889224c52830a"
+      "sha256": "4eac4261b5ab3becd81af1c5c8757cdbd2b337fffa5ac40bc169a0022d135d87"
     },
     {
       "path": "downloads/stand-20.zip",
       "bytes": 129341,
-      "sha256": "bb76bba4ca943e71a64989b1ce1ca7ed026bc316132d485cef694446291e35a6"
+      "sha256": "bf2978c6480832062022f2e99416c8449c3b9971fab20a9bfa0be974569a45f8"
     },
     {
       "path": "downloads/stand-21.zip",
       "bytes": 129191,
-      "sha256": "5a24167f1dedb3e58d074120a83b797cd5f5f5257a96ef8cc53b76d0b9820f0c"
+      "sha256": "6d948be064341a4430638652b5ab61f40511b5f67b495501976bcce84c4c84b6"
     },
     {
       "path": "downloads/stand-22.zip",
       "bytes": 126025,
-      "sha256": "e584c1abb557e010caba5be97a8f9a752b573e836c6c22d4700832d573189344"
+      "sha256": "6e60b2a78f6cc8c460e33096a19b5b605a9f9328b939dedc5f8da1362d423c0d"
     },
     {
       "path": "downloads/stand-23.zip",
       "bytes": 125849,
-      "sha256": "9e193acf9893340ab1f00064ba23e746b23ee6154df7b429e472d99356e88472"
+      "sha256": "a16bf712644e7c74c9c16bb7e5a17f1fd08141354550eaea52abf467b2b2e0b7"
     },
     {
       "path": "downloads/stand-24.zip",
       "bytes": 129773,
-      "sha256": "b6f2cfe007323a4623d1461ebcf7d190619f0218b4043f69e8b67ebd3772c2f2"
+      "sha256": "9712ff4a4dc4d0b4b5cca1fec615e46d5846b47a621771b631959ac4539d568e"
     },
     {
       "path": "downloads/stand-25.zip",
       "bytes": 126479,
-      "sha256": "b03d5f3560fa0248de384a4600af0b06b2b783e53ac36a6b602fca5eec3821cc"
+      "sha256": "54ab19ec81ec037cad4dd2cf153c3ca70febb659e793b9c3a05b306865572629"
     },
     {
       "path": "downloads/stand-26.zip",
       "bytes": 129513,
-      "sha256": "abc59b9b47ae83279ef5f41f6f9d12c11a48b54e33cad30321eef089bb5af257"
+      "sha256": "466ee624dcd9fce79a542004d7242aaf2dfd6aaa384c652c59d16805f0b44b4b"
     },
     {
       "path": "downloads/stand-27.zip",
       "bytes": 126413,
-      "sha256": "7538b2f8e4e181969d1e3093046fb50f058e527f834601087725dbd24e82de4d"
+      "sha256": "17a6eb499caf42ec663ca3e45304cd4d8898c21eb04f7c324889f255e0ac18b5"
     },
     {
       "path": "downloads/stand-28.zip",
       "bytes": 128949,
-      "sha256": "8aeb086d9895ae9040c4910a13184a3c7c87d62ed5f78b9e2da411bc6c13bd2b"
+      "sha256": "7f028ab18ba0037ab9122dc49fcedece9e50d1a96e5c8af7e8218cd9b80294af"
     },
     {
       "path": "downloads/stand-29.zip",
       "bytes": 126203,
-      "sha256": "0a11bdac1147f821db20fe33392c6ee6dfc842912faaac0e0e1811a6bca464e6"
+      "sha256": "e44460288b96729c63a4d3b7c708d03cdb85450daae09013b8830dc0c91acd92"
     },
     {
       "path": "downloads/stand-30.zip",
       "bytes": 127004,
-      "sha256": "8121ee007f571f557998f013b03a8785ebba30cb132e1eb5c0d571c2fc83c16f"
+      "sha256": "2e637c3b5370eb2de85dab80b596e3a66eeea302b84941b035d2a70e7d3936d7"
     },
     {
       "path": "downloads/stand-demo.zip",
       "bytes": 129806,
-      "sha256": "3169605863c01117e12513be62fd453136d7e3ddcbb2effa6fc47f4d74e6e107"
+      "sha256": "2c90953576585687f344485cdff19f9c471f029ba97a2cf12ff7bd512e78a807"
     },
     {
       "path": "downloads/support-desk.zip",
       "bytes": 593538,
-      "sha256": "78217826458ccdad26169c52c15d7bfaa76947fe9399ecd16a4fd2f376ecd3b5"
+      "sha256": "ab6c6f10d24c5b134478aed18ffd88c4a1bde99c4c84779ca63a617e29bfe2bc"
     },
     {
       "path": "downloads/variant-01.json",
@@ -309,7 +309,7 @@
     {
       "path": "downloads/variant-01.pdf",
       "bytes": 39251,
-      "sha256": "696195bff25057a3724c9ad0545b2b8225df0d22d490fc4725f29c03119d289e"
+      "sha256": "4b412b27cf0bcb64c3f4bc5dd3af3572fceabed490619f9020cda8ac58613efd"
     },
     {
       "path": "downloads/variant-02.json",
@@ -319,7 +319,7 @@
     {
       "path": "downloads/variant-02.pdf",
       "bytes": 40163,
-      "sha256": "b869c2f9b7baed37254a4a152382eacb650fd060683c375dde3a201e2a8df622"
+      "sha256": "21a25f376564830caf76facb203e726f04b818f7e4ede5314ffd6bae618b33d7"
     },
     {
       "path": "downloads/variant-03.json",
@@ -329,7 +329,7 @@
     {
       "path": "downloads/variant-03.pdf",
       "bytes": 40140,
-      "sha256": "61507aed48a0b7e45c4e9439c9bce757f912dd4c953f674589f16d77e50643d2"
+      "sha256": "023e55045f8d09a50617b74e4019358b23fd427162428630cc59f5614c03ba1a"
     },
     {
       "path": "downloads/variant-04.json",
@@ -339,7 +339,7 @@
     {
       "path": "downloads/variant-04.pdf",
       "bytes": 38314,
-      "sha256": "92a0f7f9dbcce94aa330b59537a892e40f3da8351657702a68bb9ccab2a91f79"
+      "sha256": "5e101da1c98c7477824d67a0d17cc0fd11de5b331a2f9fd366942f7c51277dc1"
     },
     {
       "path": "downloads/variant-05.json",
@@ -349,7 +349,7 @@
     {
       "path": "downloads/variant-05.pdf",
       "bytes": 39198,
-      "sha256": "f82734e316b5bada91c14c28c3d8f96ccdc6db2bae68df1e9b4498e123f75be6"
+      "sha256": "b669faec2ce7fd28fae8966c756cf73941c6aef76ea7ca75829debbc6dddc7a0"
     },
     {
       "path": "downloads/variant-06.json",
@@ -359,7 +359,7 @@
     {
       "path": "downloads/variant-06.pdf",
       "bytes": 40257,
-      "sha256": "0863b706f58f34c67ae1b8a2458dbd3fa8e984243771c6850c259571f1b5576f"
+      "sha256": "afff0bbce5ea9ade0010014663a37f01603b48e7298eb54d98206e4fbc0822fa"
     },
     {
       "path": "downloads/variant-07.json",
@@ -369,7 +369,7 @@
     {
       "path": "downloads/variant-07.pdf",
       "bytes": 40033,
-      "sha256": "858983a2e0e834a575f7c507662ccbfa379ff1524ed9a41159c42e2e8397e5c5"
+      "sha256": "ef75c2110be4ff21ff71ea3d2feaab927db170d38bdb675ee3562cd2378350df"
     },
     {
       "path": "downloads/variant-08.json",
@@ -379,7 +379,7 @@
     {
       "path": "downloads/variant-08.pdf",
       "bytes": 40274,
-      "sha256": "cb5045937956b3f57809b34670958687cc1f57b43de7b860da6229cfed19669a"
+      "sha256": "6ab0edba53f0b332271fb1753f584233b342bbfc73c7c84fc925753eee328866"
     },
     {
       "path": "downloads/variant-09.json",
@@ -389,7 +389,7 @@
     {
       "path": "downloads/variant-09.pdf",
       "bytes": 38956,
-      "sha256": "5613a1526c0c3a136ac091b9b927d23f8301d5f4249360c7ca1d723b25de440c"
+      "sha256": "d87badd38c454bfd8553cc4c9521022a4800a41d5de1f6bb1f6b062441fb3d10"
     },
     {
       "path": "downloads/variant-10.json",
@@ -399,7 +399,7 @@
     {
       "path": "downloads/variant-10.pdf",
       "bytes": 39855,
-      "sha256": "e723cec9a44ef6368b30c6861b470744bd3749b3d203217a3f5696d2488cd57a"
+      "sha256": "d0dc57f684c5a09582ecc14a7ddc5c848dc84ffb4a08234236162595f5e39d1b"
     },
     {
       "path": "downloads/variant-11.json",
@@ -409,7 +409,7 @@
     {
       "path": "downloads/variant-11.pdf",
       "bytes": 39100,
-      "sha256": "9531c5f7d784bbcc658c32d488a08e59ab5ff6ef2e218347e4149d43d97060e4"
+      "sha256": "d06b85956bb2028d384f59374cdf7edbdb9dfb8ec0b463b2332ba5df0c72d336"
     },
     {
       "path": "downloads/variant-12.json",
@@ -419,7 +419,7 @@
     {
       "path": "downloads/variant-12.pdf",
       "bytes": 39743,
-      "sha256": "9ee7474595fded11ebcc7369c7eabf255241311e4f1daa038b336b37c8307739"
+      "sha256": "7fa5ab53830d935224d5cd1f96431770ba1f55bbac04fa32d9230b4473d7f93c"
     },
     {
       "path": "downloads/variant-13.json",
@@ -429,7 +429,7 @@
     {
       "path": "downloads/variant-13.pdf",
       "bytes": 40618,
-      "sha256": "90117cf81af73a7b6526135b55412fdf85457c789cd512d7e03033861884db4a"
+      "sha256": "b65e81c169b067ff546f3fffff6937745aad8655d38cc052eae6043db49f298c"
     },
     {
       "path": "downloads/variant-14.json",
@@ -439,7 +439,7 @@
     {
       "path": "downloads/variant-14.pdf",
       "bytes": 40374,
-      "sha256": "ecee12d7a97db745baa9ccdec75a64f3fce11928b57bbbbce18593f2145140a7"
+      "sha256": "9971905d7b51ec19f11e0392ecfe2c03c1815b7afb509878cf78f9c208df9f50"
     },
     {
       "path": "downloads/variant-15.json",
@@ -449,7 +449,7 @@
     {
       "path": "downloads/variant-15.pdf",
       "bytes": 38655,
-      "sha256": "1c6fec1c2c3894102bfcb00473df8608625ede32ca95a54805047c85e89eb1e8"
+      "sha256": "5515fe8333e56ec6ef194e7ca79030d95945e6c9243856905966e31e4146c87f"
     },
     {
       "path": "downloads/variant-16.json",
@@ -459,7 +459,7 @@
     {
       "path": "downloads/variant-16.pdf",
       "bytes": 39300,
-      "sha256": "224dcf74cf2669640f04a0686e59e89d5566efc20375cbdcc342dab1a1388ae5"
+      "sha256": "bae487b59bc284a69119a4d8b3c4df81fa7ebd8229efe176bb5d0e39b288460a"
     },
     {
       "path": "downloads/variant-17.json",
@@ -469,7 +469,7 @@
     {
       "path": "downloads/variant-17.pdf",
       "bytes": 39287,
-      "sha256": "be49c1ba54dab29d4e79777266cefc78502dda4ede75dd7357a4ecd2c4c22119"
+      "sha256": "a931b1c5ea05947b7495236cf78cedbbfec6aad9f0b26a27e51fa6fd41142e62"
     },
     {
       "path": "downloads/variant-18.json",
@@ -479,7 +479,7 @@
     {
       "path": "downloads/variant-18.pdf",
       "bytes": 38849,
-      "sha256": "71c53408dff61e344437448e3d39604ff6ec57791ba3ab622fe156e71a73c305"
+      "sha256": "c6cee819ef60dc3744a8100ddbd4ab6f2c41d4904273d5cbd0c552ed4d561904"
     },
     {
       "path": "downloads/variant-19.json",
@@ -489,7 +489,7 @@
     {
       "path": "downloads/variant-19.pdf",
       "bytes": 38666,
-      "sha256": "88f3ba944a8ea25f05c9410ab46c5339b28820c93be2313630c81390e3b40a55"
+      "sha256": "34c69a718ee6cda5c3d638e49f5783b9f1ba74a9f91714ac372f6d83d5d3548d"
     },
     {
       "path": "downloads/variant-20.json",
@@ -499,7 +499,7 @@
     {
       "path": "downloads/variant-20.pdf",
       "bytes": 39206,
-      "sha256": "460b4df07f4ae003bacdd2996670a7ae232a1ea8c3012be68c3cab1ebfa54b16"
+      "sha256": "24c8f1bd69c72b4e0b4ff734e663b7d598439867da048e7b581ef90519600693"
     },
     {
       "path": "downloads/variant-21.json",
@@ -509,7 +509,7 @@
     {
       "path": "downloads/variant-21.pdf",
       "bytes": 38886,
-      "sha256": "bf3667588a557f6f18368bfcd9810615e2d94976a91a87edad1caa2e18d2543d"
+      "sha256": "801cf431b610876f477d98e07fd64b2d73cc85b2ad0911e9a01d75d6f8e29522"
     },
     {
       "path": "downloads/variant-22.json",
@@ -519,7 +519,7 @@
     {
       "path": "downloads/variant-22.pdf",
       "bytes": 37831,
-      "sha256": "ee91f560ec24dbe321c9855253881aca6b5f576e35a50290dcaa05e5967157c7"
+      "sha256": "cb674c49589e1197844be4df6dcbff08110b31b6dcf4ec1d07d5bc4acf599f8c"
     },
     {
       "path": "downloads/variant-23.json",
@@ -529,7 +529,7 @@
     {
       "path": "downloads/variant-23.pdf",
       "bytes": 37839,
-      "sha256": "56904cfa26a21ceab89d13abdc923a23b11551a69c1cc7f4384f72551cbae0d5"
+      "sha256": "c507bfc1ba6f7e661c6b0eab96c1ac95215fb1248dcfdd5b89c6ff2c9b7221c7"
     },
     {
       "path": "downloads/variant-24.json",
@@ -539,7 +539,7 @@
     {
       "path": "downloads/variant-24.pdf",
       "bytes": 39205,
-      "sha256": "b62c3afc778ec65302dd95bc679f4776e18fddfb014a885ce4da28aaf42faa15"
+      "sha256": "38188f81df7359f0da3d7bc71973c0cb26e9b9cd2a95d317af034d9ce848b728"
     },
     {
       "path": "downloads/variant-25.json",
@@ -549,7 +549,7 @@
     {
       "path": "downloads/variant-25.pdf",
       "bytes": 39269,
-      "sha256": "39094262e2b8d94447347ca91d7bd5c734578da89d23630db7160e8e351c8912"
+      "sha256": "f8518d1e80834b47ad6a1457e3afe584d35fec8c072f9376f786cc417c991693"
     },
     {
       "path": "downloads/variant-26.json",
@@ -559,7 +559,7 @@
     {
       "path": "downloads/variant-26.pdf",
       "bytes": 39971,
-      "sha256": "717aaa2ab14f435afd81ecaf8a014168268dc82a65c8638c1dce102e39968641"
+      "sha256": "5c85d9007a2c1ee85cfb3a0d6bd4ca4f0d8a7587462ab6790e87e9f14c75fce3"
     },
     {
       "path": "downloads/variant-27.json",
@@ -569,7 +569,7 @@
     {
       "path": "downloads/variant-27.pdf",
       "bytes": 39212,
-      "sha256": "61b41e0debd337317c37131a43a82ca692d1e4f3c459869d4cca06e41fba33e9"
+      "sha256": "4cd2a73b0c2db07fcda33435825e1ff40b85790592c1f29ac32b80da4704a126"
     },
     {
       "path": "downloads/variant-28.json",
@@ -579,7 +579,7 @@
     {
       "path": "downloads/variant-28.pdf",
       "bytes": 39348,
-      "sha256": "098bdaf6180da5fe3a343e17b7199e511e3099ebd86758916c51aa1402bbc701"
+      "sha256": "4e0269ad9fc502a75b9acd58c56627a21f36dfe51b779272552e1e76095f3429"
     },
     {
       "path": "downloads/variant-29.json",
@@ -589,7 +589,7 @@
     {
       "path": "downloads/variant-29.pdf",
       "bytes": 38140,
-      "sha256": "fd232b14b000f3b531184c185012a92484087119c0226f1a55806ba05068e273"
+      "sha256": "0ec237c1761167205ae9dacdea296e891dc18ffbcd57c9f3b50039af738ce02e"
     },
     {
       "path": "downloads/variant-30.json",
@@ -599,7 +599,12 @@
     {
       "path": "downloads/variant-30.pdf",
       "bytes": 40192,
-      "sha256": "a999a96f301c13f11b26dc40e257bb871701074a3decec84f583ba01eb4acdb2"
+      "sha256": "23e0e17063e2c6b9cedd763da362a2915996c3bd8956cd91ef2074a1e7fd757e"
+    },
+    {
+      "path": "downloads/Отчет о выполнении.docx",
+      "bytes": 40578,
+      "sha256": "8b80b9d1100486f776b3dee8b5093162482fff9f167d72de2f9a76e78c23c894"
     },
     {
       "path": "index.html",
@@ -608,8 +613,8 @@
     },
     {
       "path": "lessons.html",
-      "bytes": 60346,
-      "sha256": "f9a2e6b588a097c9c2b2e773ec2be86b8a9d0b2a41bf5241ba7d26d8ad080354"
+      "bytes": 60464,
+      "sha256": "c8ac4b1aba6122da5af5f20a419e48f4cbb5c8c727f43250f5623eedc067e712"
     },
     {
       "path": "stands/demo/app.js",
