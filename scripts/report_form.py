@@ -7,7 +7,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.opc.constants import RELATIONSHIP_TYPE as RT
-from report_master import text_control, response, heading, field, figure_slot
+from report_master import text_control, response, heading, field, figure_slot, data_table, black_text
 
 REPOSITORY='https://github.com/OlgaKraven/2026-09.01.05-otp-up-pm.01-sem01'
 SITE='https://olgakraven.github.io/2026-09.01.05-otp-up-pm.01-sem01/'
@@ -24,17 +24,15 @@ def build():
  def link(label,url):
   p(label,style='Field label');paragraph=doc.add_paragraph();paragraph.paragraph_format.first_line_indent=Mm(0)
   element=OxmlElement('w:hyperlink');element.set(qn('r:id'),paragraph.part.relate_to(url,RT.HYPERLINK,is_external=True));run=OxmlElement('w:r');text=OxmlElement('w:t');text.text=url;run.append(text);element.append(run);paragraph._p.append(element);md.extend([url,''])
- p('АНО ВО «СИНЕРГИЯ»',style='Cover field');p('Отчет о выполнении',style='Title')
- values=[('practice_type','Вид практики','Учебная практика'),('discipline','Дисциплина или ПМ','ПМ.01'),('topic','Тема','Поддержка клиентов по вопросам эксплуатации технологических компонентов инфокоммуникационных систем'),('student','ФИО студента',None),('group','Группа',None),('variant','Номер варианта',None),('domain','Предметная область',None),('period','Период практики',None)]
+ p('Университет "Синергия"',style='Cover field');p('Отчет о выполнении',style='Title')
+ values=[('practice_name','Название практики','Учебная практика ПМ.01'),('student','ФИО студента',None),('group','Группа',None),('variant','Номер варианта',None),('domain','Предметная область',None)]
  for tag,label,value in values:
   para=doc.add_paragraph(style='Cover field');para.add_run(label+': ');text_control(para,tag,label,value or '____________________')
- p('Группа: VДКО-11Х или ДКО-1ХХ. Заполнить редактируемые поля собственными сведениями; подсказки заменить описанием выполненных действий. После заполнения обновить содержание и поля документа.')
- doc.add_page_break();p('Содержание',style='TOC title');para=doc.add_paragraph();field(para,r'TOC \o "1-2" \h \z \u','')
+ p('Группа: VДКО-11Х или ДКО-1ХХ. Заполнить редактируемые поля собственными сведениями; подсказки заменить описанием выполненных действий. После заполнения обновить поля нумерации и ссылок документа.')
  heading(doc,'Исходные условия',new_page=True)
- answer('Цель и ожидаемый итог собственной работы','goal')
- answer('Предметная область, исходные обращения и рабочие файлы','inputs',3)
- answer('Среда выполнения и необходимые параметры','environment')
- answer('Замены данных DEMO на данные своей области','mapping',3)
+ data_table(doc,'Предметная область и исходные материалы',1,['Сведения','Данные своего варианта'],[60,100],'inputs',fixed_labels=['Предметная область и номер','Десять исходных обращений','Рабочие файлы и досье'])
+ data_table(doc,'Среда выполнения',2,['Программа или компонент','Версия','Необходимые параметры'],[55,25,80],'environment',fixed_labels=['Браузер','Индивидуальный стенд','Текстовый редактор'])
+ data_table(doc,'Подстановки образца',3,['В образце','В своём варианте','Где используется'],[50,60,50],'mapping',fixed_labels=['Код DEMO','Обращения и файлы DEMO','Две задачи образца'])
  link('Репозиторий учебных материалов',REPOSITORY);link('Учебный сайт и отдельные стенды',SITE)
  heading(doc,'Выполнение и проверка',new_page=True)
  p('Записывать отдельно: предоставлено по досье, выполнено самостоятельно, требуется уточнить. План недоступной проверки обозначать как план. Для цифрового сравнения сохранять исходное и итоговое состояния. Неиспользуемое место рисунка удалить с объяснением, если этап выполняется только анализом досье. Изображения сохранять читаемыми; при необходимости размещать на отдельной странице.')
@@ -52,15 +50,15 @@ def build():
   answer('Исходные данные и ожидаемый результат','stage'+str(index)+'_initial')
   answer('Выполненные действия','stage'+str(index)+'_actions',3)
   answer('Фактический результат и проверка','stage'+str(index)+'_actual')
-  answer('Вывод по этапу и объяснение расхождений','stage'+str(index)+'_conclusion')
   if index==5:
    answer('Задача 1 — собственное условие, решение и проверка','extra1',3);answer('Задача 2 — собственное условие, решение и проверка','extra2',3)
   for title in pictures:
    figure_number+=1
    para=doc.add_paragraph();para.add_run('Подтверждение этапа привести на рис. ');field(para,'REF PM01Figure'+str(figure_number)+' \\h',str(figure_number));para.add_run('. Заменить подсказку в рамке собственным изображением, сохраняя пропорции. Область допускает увеличение.')
    figure_slot(doc,title,'picture_'+str(figure_number),figure_number,'PM01Figure'+str(figure_number));md.extend(['[Место для рисунка '+str(figure_number)+'; не менее 60 мм]','', 'Рисунок '+str(figure_number)+' — '+title,''])
+  answer('Вывод по этапу и объяснение расхождений','stage'+str(index)+'_conclusion')
  heading(doc,'Итоговая проверка и сдача',new_page=True)
- para=doc.add_paragraph(style='Caption');para.add_run('Таблица ');field(para,r'SEQ Таблица \* ARABIC','1');para.add_run(' — итоговые результаты проверки')
+ para=doc.add_paragraph(style='Table caption');para.add_run('Таблица ');field(para,r'SEQ Таблица \* ARABIC','4');para.add_run(' — итоговые результаты проверки')
  table=doc.add_table(rows=1,cols=4);table.autofit=False
  for i,title in enumerate(['Проверяемый результат','Ожидаемый результат','Фактический результат','Вывод']):table.cell(0,i).text=title
  for row_index,label in enumerate(['Десять обращений','Пять ответов','Две карты','Обе дополнительные задачи','Собственные сравнения','Восстановление и согласованность файлов'],1):
@@ -76,11 +74,7 @@ def build():
  p('Если самостоятельный репозиторий заданием не предусмотрен, указать неприменимость. В ПМ.01 собственный программный проект не требуется; ссылка на учебные материалы приведена ниже.')
  link('Репозиторий учебных материалов ПМ.01',REPOSITORY)
  answer('Невыполненные требования и причины при наличии','limitations')
- heading(doc,'Заключение',new_page=True);answer('Что выполнено, что получено, какие затруднения возникли и как устранены','conclusion',6)
- heading(doc,'Использованные источники')
- for index in range(1,4):
-  para=doc.add_paragraph();para.add_run(str(index)+') ');text_control(para,'source_'+str(index),'Использованный источник','____________________________________________',multiline=True)
- p('Указать только использованные материалы. Для интернет-источника привести название, полный URL и дату обращения.')
+ black_text(doc)
  target=root/'site/downloads'/NAME;doc.save(target);shutil.copyfile(target,root/'site/downloads/report-template.docx')
  text='\n'.join(md).rstrip()+'\n';(root/'report-template.md').write_text(text,encoding='utf-8',newline='\n');(root/'site/downloads/report-template.md').write_text(text,encoding='utf-8',newline='\n')
  print('Prepared shared-master report with 6 stages and '+str(figure_number)+' expandable figure areas of at least 60 mm.')

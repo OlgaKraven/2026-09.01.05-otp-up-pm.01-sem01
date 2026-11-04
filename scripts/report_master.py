@@ -175,6 +175,7 @@ def figure_slot(doc, label, tag, number, bookmark_name):
 
 def data_table(doc, title, number, labels, widths, tag, *, fixed_labels=None):
     p = doc.add_paragraph(style="Table caption")
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.add_run("Таблица ")
     field(p, r"SEQ Таблица \* ARABIC", str(number))
     p.add_run(" — " + title)
@@ -215,7 +216,8 @@ def black_text(doc):
     """Keep text black, including automatically styled and visited hyperlinks."""
     for name in ("Hyperlink", "FollowedHyperlink"):
         if name not in doc.styles:
-            doc.styles.add_style(name, WD_STYLE_TYPE.CHARACTER)
+            doc.styles.add_style(name, WD_STYLE_TYPE.CHARACTER, builtin=True)
+        doc.styles[name].element.attrib.pop(qn("w:customStyle"), None)
     for style in doc.styles:
         rpr = style.element.get_or_add_rPr()
         if rpr.find(qn("w:color")) is None:
