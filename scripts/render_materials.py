@@ -1,6 +1,6 @@
 """Render the complete teaching sources and package the verified offline stands."""
 from __future__ import annotations
-import html, json, os, shutil, zipfile
+import html, json, os, shutil, sys, zipfile
 from urllib.parse import quote
 from pathlib import Path
 from reportlab.pdfbase import pdfmetrics
@@ -12,8 +12,6 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.platypus import BaseDocTemplate,PageTemplate,Frame,Paragraph,Spacer,PageBreak,Table,TableStyle,Image,KeepTogether,Flowable
 from reportlab.platypus.tableofcontents import TableOfContents
-from fontTools.ttLib import TTFont as Font
-from fontTools.varLib.instancer import instantiateVariableFont
 ROOT=Path(__file__).resolve().parents[1];SITE=ROOT/'site';DL=SITE/'downloads';WIDTH=A4[0]-50*mm
 BASE='https://olgakraven.github.io/2026-09.01.05-otp-up-pm.01-sem01/'
 def read(name):return json.loads((ROOT/'content'/name).read_text(encoding='utf-8'))
@@ -23,6 +21,8 @@ fontdir=SITE/'assets/fonts'
 for weight,name in [(400,'Golos'),(700,'GolosBold')]:
     dest=fontdir/(name+'.ttf')
     if not dest.exists():
+        from fontTools.ttLib import TTFont as Font
+        from fontTools.varLib.instancer import instantiateVariableFont
         f=Font(fontdir/'GolosText.ttf');instantiateVariableFont(f,{'wght':weight},inplace=True).save(dest)
     pdfmetrics.registerFont(TTFont(name,str(dest)))
 pdfmetrics.registerFontFamily('Golos',normal='Golos',bold='GolosBold')
@@ -114,7 +114,7 @@ def area_story(d,include_toc=False):
     v=d['variant'];out=heading('Вариант '+v+'. '+d['subject'],'Предметная область · ПМ.01')
     out+=[P(d.get('context',''))]
     identity=Table([[Paragraph('<b>Индивидуальная область — '+h(d['stand_id'])+'</b><br/>Собственные обращения, файлы и условия.',small),Paragraph('<b>Образец — DEMO</b><br/>Показывает способ работы. Значения берутся из своей области.',small)]],colWidths=[WIDTH/2,WIDTH/2])
-    identity.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('LINEBEFORE',(1,0),(1,0),.7,colors.HexColor('#dfe1e5')),('LEFTPADDING',(0,0),(0,0),0),('RIGHTPADDING',(0,0),(0,0),16),('LEFTPADDING',(1,0),(1,0),16)]));out+=[identity,Spacer(1,16),P('Использовать отдельную рабочую папку и код, назначенный преподавателем.')]
+    identity.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('LINEBEFORE',(1,0),(1,0),.7,colors.HexColor('#dfe1e5')),('LEFTPADDING',(0,0),(0,0),0),('RIGHTPADDING',(0,0),(0,0),16),('LEFTPADDING',(1,0),(1,0),16)]));out+=[identity,Spacer(1,16),P('Использовать отдельную рабочую папку. Вводить код работы, если он выдан отдельно.')]
     out+=[link('Открыть стенд области',BASE+'stands/v'+v+'/index.html'),link('Скачать автономный стенд области',BASE+'downloads/stand-'+v+'.zip')]
     out+=block('Подготовить собственные данные',[f'Распаковать stand-{v}.zip и открыть index.html. Для новой работы проверить десять ID своего варианта. Для продолжения использовать поле восстановления и свой JSON; это альтернативные пути, а не два обязательных импорта.',f'Собственный контрольный код {d["controls"]["code"]}, дата {d["controls"]["date"]}; в CSV две строки и четыре столбца. Файлы лежат в materials/{v}.'],f'В заголовке «{d["subject"]}», ID от {d["tickets"][0]["id"]} до {d["tickets"][-1]["id"]}.',number='1',route=True)
     out+=block('Обработать обращения',['Зарегистрировать десять карточек, подготовить ответы 01, 04, 06, 08, 10 и две карты. Метод действий раскрыт в общей методичке.','Повторяющиеся темы карт: '+'; '.join(d['knowledge_card_topics'])+'.','Досье — предоставленные условия задачи. Собственные результаты цифровых проверок записывать отдельно. Анализ отсутствующего внешнего объекта не объявлять выполненным ремонтом.'],'Заполнены пересказы, категории, статусы, влияние и уточняющие вопросы.',number='2',route=True)
@@ -123,11 +123,11 @@ def area_story(d,include_toc=False):
         out+=block(t['id']+' · '+t['topic'],['Источник: '+t['channel']+'. Контакт: '+t['requester']+'.',t['description'],'Досье учебного случая: '+t['dossier']],number=str(i))
     out+=heading('Индивидуальные условия · '+v+' · '+d['subject'])
     for i,(task,inp) in enumerate(zip(d['additional_tasks'],d['additional_inputs']),1):out+=block('Дополнительная задача '+str(i),[task,inp],'Названы исходные факты, сравниваемые условия, вывод и ограничение.')
-    out+=block('Проверить и сохранить результат',['Для предоставленного файла сохранить исходное состояние, действие, ожидаемый и фактический результат. После изменения проверить исходный и соседний безопасный сценарий. Для анализа досье указать источник каждого вывода.','Скачать таблицу десяти обращений, пять ответов, две карты и основу отчёта. Добавить доказательства и решения обеих задач. Экспортировать JSON, открыть новый сеанс и восстановить его.'],'Документы и резервная копия относятся к своей области, а обе карты доступны после восстановления.',number='3',route=True)
+    out+=block('Проверить и сохранить результат',['Для предоставленного файла сохранить исходное состояние, действие, ожидаемый и фактический результат. После изменения проверить исходный и соседний безопасный сценарий. Для анализа досье указать источник каждого вывода.','Скачать реестр, пять ответов и две карты. Внести доказательства и обе задачи в общий Word-бланк из выдачи. Экспортировать JSON и проверить его восстановление в новом приватном окне. Порядок загрузки указан в методичке.'],'Документы и резервная копия относятся к своей области, а обе карты доступны после восстановления.',number='3',route=True)
     out+=[P('Контрольный sample.csv содержит две строки и четыре столбца. Дополнительные файлы отдельных случаев могут иметь другую схему или число строк; их нельзя заменять контрольной таблицей. comparisons.html задаёт действия и проверку обеих дополнительных задач. Досье обозначает предоставленные сведения, а не личные измерения. Реально доступные материалы перечислены ниже.')]
     out+=[link(title,BASE+'stands/v'+v+'/'+path) for title,path in d['materials'].items()]
     return out
-story=heading('Список предметных областей','ПМ.01 · 09.01.05 · семестр 1')+[P('Общее задание и индивидуальные стенды. Для работы можно скачать отдельную карточку назначенной области и её автономный комплект.'),PageBreak()]+heading('Содержание')+[toc(),PageBreak()]+full_assignment()
+story=heading('Список предметных областей','ПМ.01 · 09.01.05 · семестр 1')+[P('Найти порядковый номер своей фамилии в списке своей группы. В содержании открыть карточку с этим номером. Например, для строки 7 выбрать вариант 07 и скачать только stand-07.zip. Если фамилии или номера нет, уточнить номер у руководителя практики.'),PageBreak()]+heading('Содержание')+[toc(),PageBreak()]+full_assignment()
 for d in data[1:]:
     story+=[PageBreak()]+area_story(d)
     Doc(DL/('variant-'+d['variant']+'.pdf'),'ПМ.01 · '+d['subject']).build(area_story(d))
@@ -173,6 +173,16 @@ Doc(DL/'guide.pdf','ПМ.01 · Методические рекомендации
 nav='<p><a href="downloads/guide.pdf">Скачать методические рекомендации · PDF</a></p><ol>'+''.join(f'<li><a href="#step-{i}">{h(s["title"])}</a></li>' for i,s in enumerate(guide,1))+'</ol>'
 html_start='<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Методические рекомендации ПМ.01</title><link rel="stylesheet" href="assets/materials.css"><header><h1>Методические рекомендации</h1><nav><a href="index.html">Задание</a><a href="areas.html">Предметные области</a></nav></header><main>'
 write(SITE/'lessons.html',html_start+'<h2>1. Полное задание</h2>'+''.join(html_block(s['title'],[s['text']],number=str(i)) for i,s in enumerate(assignment,1))+'<h2>2. Файлы для работы</h2>'+''.join('<p><a href="downloads/'+f+'">'+h(l)+'</a></p>' for l,f in files)+'<h2>3. Разбор образца</h2>'+nav+''.join(html_sections)+'</main></html>')
+# The importer uses fixed filenames independently of the established Pages URLs.
+delivery = ROOT / 'materials'
+delivery.mkdir(exist_ok=True)
+shutil.copyfile(DL/'guide.pdf', delivery/'assignment.pdf')
+shutil.copyfile(DL/'assignment.pdf', delivery/'guide.pdf')
+
+if '--pdf-only' in sys.argv:
+    print('Updated the method PDF, the subject area PDFs and lessons page.')
+    sys.exit(0)
+
 # Use actual UI exports, including the restored JSON, as the comparison package.
 result=ROOT/'output/playwright/demo-result.json';restored=ROOT/'output/playwright/restored-result.json'
 if json.loads(result.read_text(encoding='utf-8'))!=json.loads(restored.read_text(encoding='utf-8')):raise ValueError('Restored state differs from the exported walkthrough')
